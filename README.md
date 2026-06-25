@@ -6,6 +6,14 @@ with the total you spend per month. As an optional extra, it can read a bank
 statement (CSV) and use an AI model to suggest which transactions look like
 subscriptions, so you don't have to enter them by hand.
 
+I chose this idea because it's a problem I actually have. Between streaming,
+music, cloud storage, and work tools, my own subscription list kept growing —
+and each charge on its own looks harmless, until you realise how much leaves
+your account every month. Scattered across different apps and bank statements,
+they're easy to forget, duplicate, or simply lose track of. SubTrack is my
+attempt to put them in one place, see the real monthly cost at a glance, and
+finally get them under control.
+
 This was built as a recruitment task for the **AI-Augmented Developer Intern,
 QVP Team** position at Boldare.
 
