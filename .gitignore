@@ -18,6 +18,12 @@ desktop.ini
 
 # --- Docker ---
 docker-compose.override.yml
+backend/compose.yaml
+backend/compose.override.yaml
+
+# --- OS / tooling artifacts ---
+backend/NUL
+package-lock.json
 
 # --- Backend (Symfony / PHP) ---
 backend/vendor/
