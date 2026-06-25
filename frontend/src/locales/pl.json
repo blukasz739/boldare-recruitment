@@ -87,7 +87,7 @@
   "validation": {
     "required": "To pole jest wymagane",
     "usernameMin": "Nazwa użytkownika musi mieć co najmniej 3 znaki",
-    "passwordMin": "Hasło musi mieć co najmniej 6 znaków",
+    "passwordMin": "Hasło musi mieć co najmniej 8 znaków",
     "passwordMatch": "Hasła muszą być identyczne",
     "nameMin": "Nazwa musi mieć co najmniej 2 znaki",
     "amountPositive": "Kwota musi być większa od zera",

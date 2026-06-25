@@ -87,7 +87,7 @@
   "validation": {
     "required": "This field is required",
     "usernameMin": "Username must be at least 3 characters",
-    "passwordMin": "Password must be at least 6 characters",
+    "passwordMin": "Password must be at least 8 characters",
     "passwordMatch": "Passwords must match",
     "nameMin": "Name must be at least 2 characters",
     "amountPositive": "Amount must be greater than zero",

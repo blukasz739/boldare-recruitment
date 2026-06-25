@@ -21,7 +21,7 @@ export function createRegisterSchema(t: TFunction) {
       password: z
         .string()
         .min(1, t('validation.required'))
-        .min(6, t('validation.passwordMin')),
+        .min(8, t('validation.passwordMin')),
       confirmPassword: z.string().min(1, t('validation.required')),
     })
     .refine((data) => data.password === data.confirmPassword, {
