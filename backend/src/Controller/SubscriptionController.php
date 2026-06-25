@@ -3,8 +3,8 @@
 namespace App\Controller;
 
 use App\DTO\Subscription\SubscriptionRequest;
-use App\Entity\Subscription;
 use App\Entity\User;
+use App\Serializer\SubscriptionSerializer;
 use App\Service\Subscription\SubscriptionManager;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -17,6 +17,7 @@ final class SubscriptionController extends AbstractController
 {
     public function __construct(
         private readonly SubscriptionManager $subscriptionManager,
+        private readonly SubscriptionSerializer $subscriptionSerializer,
     ) {
     }
 
@@ -25,7 +26,7 @@ final class SubscriptionController extends AbstractController
     {
         $subscriptions = $this->subscriptionManager->listForUser($this->getAuthenticatedUser());
 
-        return $this->json(array_map($this->serialize(...), $subscriptions));
+        return $this->json(array_map($this->subscriptionSerializer->toArray(...), $subscriptions));
     }
 
     #[Route('/summary', name: 'api_subscriptions_summary', methods: ['GET'])]
@@ -39,7 +40,7 @@ final class SubscriptionController extends AbstractController
     {
         $subscription = $this->subscriptionManager->getForUser($this->getAuthenticatedUser(), $id);
 
-        return $this->json($this->serialize($subscription));
+        return $this->json($this->subscriptionSerializer->toArray($subscription));
     }
 
     #[Route('', name: 'api_subscriptions_create', methods: ['POST'])]
@@ -47,7 +48,7 @@ final class SubscriptionController extends AbstractController
     {
         $subscription = $this->subscriptionManager->create($this->getAuthenticatedUser(), $request);
 
-        return $this->json($this->serialize($subscription), Response::HTTP_CREATED);
+        return $this->json($this->subscriptionSerializer->toArray($subscription), Response::HTTP_CREATED);
     }
 
     #[Route('/{id}', name: 'api_subscriptions_update', requirements: ['id' => '\d+'], methods: ['PUT'])]
@@ -55,7 +56,7 @@ final class SubscriptionController extends AbstractController
     {
         $subscription = $this->subscriptionManager->update($this->getAuthenticatedUser(), $id, $request);
 
-        return $this->json($this->serialize($subscription));
+        return $this->json($this->subscriptionSerializer->toArray($subscription));
     }
 
     #[Route('/{id}', name: 'api_subscriptions_delete', requirements: ['id' => '\d+'], methods: ['DELETE'])]
@@ -75,20 +76,5 @@ final class SubscriptionController extends AbstractController
         }
 
         return $user;
-    }
-
-    /**
-     * @return array<string, int|string>
-     */
-    private function serialize(Subscription $subscription): array
-    {
-        return [
-            'id' => $subscription->getId(),
-            'name' => $subscription->getName(),
-            'amount' => $subscription->getAmount(),
-            'billing_cycle' => $subscription->getBillingCycle()->value,
-            'category' => $subscription->getCategory()->value,
-            'created_at' => $subscription->getCreatedAt()->format(\DateTimeInterface::ATOM),
-        ];
     }
 }
