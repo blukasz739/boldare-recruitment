@@ -53,7 +53,7 @@ export function sortSubscriptions(
   }
 }
 
-export function getFilteredMonthlyTotal(subscriptions: Subscription[]): number {
+function getFilteredMonthlyTotal(subscriptions: Subscription[]): number {
   return subscriptions.reduce(
     (total, subscription) =>
       total +

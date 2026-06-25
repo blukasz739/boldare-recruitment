@@ -25,24 +25,6 @@ export interface SubscriptionWithShare extends Subscription {
   share: number;
 }
 
-export function enrichSubscriptions(
-  subscriptions: Subscription[],
-  totalMonthly: number | string,
-): SubscriptionWithShare[] {
-  return subscriptions.map((subscription) => {
-    const monthlyEquivalent = getMonthlyEquivalent(
-      subscription.amount,
-      subscription.billing_cycle,
-    );
-
-    return {
-      ...subscription,
-      monthlyEquivalent,
-      share: getShare(monthlyEquivalent, totalMonthly),
-    };
-  });
-}
-
 export function getDesktopGridSpan(share: number): number {
   return Math.max(2, Math.min(6, Math.round(share * 6)));
 }

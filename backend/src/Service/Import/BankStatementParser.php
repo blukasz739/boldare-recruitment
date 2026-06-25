@@ -7,7 +7,7 @@ use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 
 final class BankStatementParser
 {
-    private const MAX_FILE_SIZE = 2_097_152; // 2 MB
+    private const MAX_FILE_SIZE = 2_097_152;
 
     public function extractContent(UploadedFile $file): string
     {

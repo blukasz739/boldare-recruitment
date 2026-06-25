@@ -29,6 +29,3 @@ export function createRegisterSchema(t: TFunction) {
       path: ['confirmPassword'],
     });
 }
-
-export type LoginFormValues = z.infer<ReturnType<typeof createLoginSchema>>;
-export type RegisterFormValues = z.infer<ReturnType<typeof createRegisterSchema>>;

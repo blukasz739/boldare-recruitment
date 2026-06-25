@@ -13,7 +13,6 @@ framework:
     router:
         utf8: true
 
-    # API JSON — bez szablonów Twig
     property_info:
         enabled: true
 

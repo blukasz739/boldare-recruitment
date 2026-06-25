@@ -57,7 +57,7 @@ export function SubscriptionFormModal({
       form.setValues(initialValues ?? defaultValues);
       form.clearErrors();
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps -- Mantine recreates `form` each render; depending on it would loop.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [opened, initialValues]);
 
   const handleSubmit = form.onSubmit(async (values) => {

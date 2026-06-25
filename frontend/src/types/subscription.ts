@@ -44,10 +44,3 @@ export const CATEGORIES: Category[] = [
   'work_tools',
   'other',
 ];
-
-export const CATEGORY_COLORS: Record<Category, string> = {
-  entertainment: 'pink',
-  music: 'grape',
-  work_tools: 'blue',
-  other: 'gray',
-};

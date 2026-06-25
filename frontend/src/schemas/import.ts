@@ -11,7 +11,3 @@ export function createImportUploadSchema(t: TFunction) {
       .refine((file) => file !== null, t('validation.fileRequired')),
   });
 }
-
-export type ImportUploadFormValues = z.infer<
-  ReturnType<typeof createImportUploadSchema>
->;

@@ -19,7 +19,7 @@ interface AppHeaderProps {
   variant: HeaderVariant;
 }
 
-export function AppHeader({ variant }: AppHeaderProps) {
+function AppHeader({ variant }: AppHeaderProps) {
   const { t } = useTranslation();
   const navigate = useNavigate();
   const { logout } = useAuth();

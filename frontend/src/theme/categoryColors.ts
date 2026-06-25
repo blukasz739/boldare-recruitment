@@ -1,6 +1,6 @@
 import type { Category } from '../types/subscription';
 
-export interface CategoryTileStyle {
+interface CategoryTileStyle {
   bg: string;
   bgMuted: string;
   text: string;

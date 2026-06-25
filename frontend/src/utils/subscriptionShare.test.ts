@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
+import { addShareToSubscriptions } from './subscriptionFilters';
 import {
-  enrichSubscriptions,
   getDesktopGridSpan,
   getMobileTileHeight,
   getMonthlyEquivalent,
@@ -34,7 +34,7 @@ describe('subscriptionShare', () => {
       { ...baseSubscription, id: 2, amount: 60, billing_cycle: 'monthly' },
     ];
 
-    const enriched = enrichSubscriptions(subscriptions, 61);
+    const enriched = addShareToSubscriptions(subscriptions, 61);
 
     expect(enriched).toHaveLength(2);
     expect(enriched.find((s) => s.id === 2)?.monthlyEquivalent).toBe(60);

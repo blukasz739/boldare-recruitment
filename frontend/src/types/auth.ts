@@ -13,9 +13,5 @@ export interface LoginInput {
   password: string;
 }
 
-export interface RegisterInput extends LoginInput {
-  confirmPassword: string;
-}
-
 export const TOKEN_STORAGE_KEY = 'subtrack_token';
 export const USER_STORAGE_KEY = 'subtrack_user';

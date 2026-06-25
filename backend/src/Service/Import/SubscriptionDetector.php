@@ -2,7 +2,6 @@
 
 namespace App\Service\Import;
 
-use App\DTO\Import\ImportProposalData;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 final class SubscriptionDetector
@@ -15,7 +14,7 @@ final class SubscriptionDetector
     }
 
     /**
-     * @return list<ImportProposalData>
+     * @return list<\App\DTO\Import\ImportProposalData>
      */
     public function detectFromFile(string $apiKey, UploadedFile $file): array
     {

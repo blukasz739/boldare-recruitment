@@ -1,7 +1,7 @@
 import { createContext, useContext } from 'react';
 import type { LoginInput, User } from '../types/auth';
 
-export interface AuthContextValue {
+interface AuthContextValue {
   user: User | null;
   isAuthenticated: boolean;
   login: (input: LoginInput) => Promise<void>;

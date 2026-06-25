@@ -2,8 +2,8 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import * as subscriptionsApi from '../api/subscriptions';
 import type { SubscriptionInput } from '../types/subscription';
 
-export const subscriptionsQueryKey = ['subscriptions'] as const;
-export const summaryQueryKey = ['subscriptions', 'summary'] as const;
+const subscriptionsQueryKey = ['subscriptions'] as const;
+const summaryQueryKey = ['subscriptions', 'summary'] as const;
 
 export function useSubscriptions() {
   return useQuery({
