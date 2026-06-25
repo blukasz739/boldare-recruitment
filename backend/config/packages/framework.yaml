@@ -17,6 +17,12 @@ framework:
     property_info:
         enabled: true
 
+    serializer:
+        enabled: true
+
+    validation:
+        email_validation_mode: html5
+
 when@test:
     framework:
         test: true
