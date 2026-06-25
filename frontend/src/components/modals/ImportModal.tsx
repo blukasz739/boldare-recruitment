@@ -1,11 +1,13 @@
 import {
   Alert,
+  Box,
   Button,
   Checkbox,
   Group,
   Loader,
   Modal,
   PasswordInput,
+  Paper,
   Stack,
   Stepper,
   Text,
@@ -23,6 +25,7 @@ import { ApiError } from '../../api/client';
 import { useSubscriptionMutations } from '../../hooks/useSubscriptions';
 import { createImportUploadSchema } from '../../schemas/import';
 import type { ImportProposal } from '../../types/subscription';
+import { CATEGORY_TILE_STYLES } from '../../theme/categoryColors';
 import { formatCurrency } from '../../utils/formatCurrency';
 import { CategoryBadge } from '../subscriptions/CategoryBadge';
 
@@ -128,6 +131,11 @@ export function ImportModal({ opened, onClose }: ImportModalProps) {
 
   const selectedCount = proposals.filter((p) => p.selected).length;
 
+  const modalStyles = {
+    content: { background: 'light-dark(#ffffff, #18181b)' },
+    header: { background: 'light-dark(#ffffff, #18181b)' },
+  };
+
   return (
     <Modal
       opened={opened}
@@ -135,8 +143,9 @@ export function ImportModal({ opened, onClose }: ImportModalProps) {
       title={t('import.title')}
       size="lg"
       centered
+      styles={modalStyles}
     >
-      <Stepper active={activeStep} mb="lg">
+      <Stepper active={activeStep} mb="xl" color="accent" className="import-stepper">
         <Stepper.Step label={t('import.stepUpload')} />
         <Stepper.Step label={t('import.stepAnalyze')} />
         <Stepper.Step label={t('import.stepReview')} />
@@ -144,7 +153,7 @@ export function ImportModal({ opened, onClose }: ImportModalProps) {
       </Stepper>
 
       {error && activeStep !== 3 && (
-        <Alert color="red" mb="md" onClose={() => setError(null)} withCloseButton>
+        <Alert color="red" mb="md" variant="light" onClose={() => setError(null)} withCloseButton>
           {error}
         </Alert>
       )}
@@ -152,7 +161,9 @@ export function ImportModal({ opened, onClose }: ImportModalProps) {
       {activeStep === 0 && (
         <form onSubmit={handleAnalyze}>
           <Stack gap="md">
-            <Alert color="blue">{t('import.apiKeyInfo')}</Alert>
+            <Alert color="blue" variant="light">
+              {t('import.apiKeyInfo')}
+            </Alert>
             <PasswordInput
               label={t('import.apiKey')}
               {...form.getInputProps('api_key')}
@@ -161,16 +172,25 @@ export function ImportModal({ opened, onClose }: ImportModalProps) {
               accept={[MIME_TYPES.csv]}
               maxFiles={1}
               onDrop={(files) => form.setFieldValue('file', files[0] ?? null)}
+              styles={{
+                root: {
+                  borderColor: 'var(--mantine-color-default-border)',
+                  background: 'var(--mantine-color-neutral-8)',
+                  borderStyle: 'dashed',
+                },
+              }}
             >
               <Group justify="center" gap="sm" mih={120}>
-                <IconUpload size={24} />
+                <IconUpload size={24} stroke={1.5} />
                 <div>
-                  <Text size="sm">{t('import.dropzoneTitle')}</Text>
+                  <Text size="sm" fw={500}>
+                    {t('import.dropzoneTitle')}
+                  </Text>
                   <Text size="xs" c="dimmed">
                     {t('import.dropzoneHint')}
                   </Text>
                   {form.values.file && (
-                    <Text size="sm" mt="xs" fw={500}>
+                    <Text size="sm" mt="xs" fw={600} c="accent.5">
                       {form.values.file.name}
                     </Text>
                   )}
@@ -185,6 +205,9 @@ export function ImportModal({ opened, onClose }: ImportModalProps) {
             <Button
               type="submit"
               disabled={!form.values.api_key || !form.values.file}
+              color="accent"
+              c="dark.9"
+              fw={700}
             >
               {t('import.analyze')}
             </Button>
@@ -194,8 +217,8 @@ export function ImportModal({ opened, onClose }: ImportModalProps) {
 
       {activeStep === 1 && (
         <Stack align="center" gap="md" py="xl">
-          <Loader />
-          <Text>{t('import.analyzing')}</Text>
+          <Loader color="accent" type="dots" />
+          <Text c="dimmed">{t('import.analyzing')}</Text>
         </Stack>
       )}
 
@@ -206,32 +229,52 @@ export function ImportModal({ opened, onClose }: ImportModalProps) {
               proposal.billing_cycle === 'monthly'
                 ? t('subscription.perMonth')
                 : t('subscription.perYear');
+            const tileStyle = CATEGORY_TILE_STYLES[proposal.category];
 
             return (
-              <Group key={`${proposal.name}-${index}`} wrap="nowrap" align="flex-start">
-                <Checkbox
-                  checked={proposal.selected}
-                  onChange={() => toggleProposal(index)}
-                  mt={4}
-                />
-                <Stack gap={4} style={{ flex: 1 }}>
-                  <Text fw={600}>{proposal.name}</Text>
-                  <Text size="sm">
-                    {formatCurrency(proposal.amount)} {cycleLabel}
-                  </Text>
-                  <CategoryBadge category={proposal.category} />
-                </Stack>
-              </Group>
+              <Paper
+                key={`${proposal.name}-${index}`}
+                p="md"
+                withBorder
+                style={{
+                  borderColor: proposal.selected
+                    ? tileStyle.bg
+                    : 'var(--mantine-color-default-border)',
+                  background: proposal.selected
+                    ? tileStyle.bgMuted
+                    : 'transparent',
+                  transition: 'border-color 0.15s ease, background 0.15s ease',
+                }}
+              >
+                <Group wrap="nowrap" align="flex-start">
+                  <Checkbox
+                    checked={proposal.selected}
+                    onChange={() => toggleProposal(index)}
+                    mt={4}
+                    color="accent"
+                  />
+                  <Stack gap={4} style={{ flex: 1 }}>
+                    <Text fw={600}>{proposal.name}</Text>
+                    <Text size="sm" c="dimmed">
+                      {formatCurrency(proposal.amount)} {cycleLabel}
+                    </Text>
+                    <CategoryBadge category={proposal.category} />
+                  </Stack>
+                </Group>
+              </Paper>
             );
           })}
-          <Group justify="flex-end">
-            <Button variant="default" onClick={handleClose}>
+          <Group justify="flex-end" mt="sm">
+            <Button variant="subtle" color="gray" onClick={handleClose}>
               {t('subscription.cancel')}
             </Button>
             <Button
               loading={confirmMutation.isPending}
               disabled={selectedCount === 0}
               onClick={() => void handleConfirm()}
+              color="accent"
+              c="dark.9"
+              fw={700}
             >
               {t('import.confirmSelected', { count: selectedCount })}
             </Button>
@@ -241,13 +284,30 @@ export function ImportModal({ opened, onClose }: ImportModalProps) {
 
       {activeStep === 3 && (
         <Stack align="center" gap="md" py="md">
+          <Box
+            w={56}
+            h={56}
+            style={{
+              borderRadius: 14,
+              background: 'var(--mantine-color-accent-5)',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+            }}
+          >
+            <Text fw={800} size="xl" c="dark.9">
+              ✓
+            </Text>
+          </Box>
           <Title order={4}>{t('import.successTitle')}</Title>
-          <Text ta="center">
+          <Text ta="center" c="dimmed">
             {t('import.successMessage', {
               count: confirmMutation.data?.count ?? selectedCount,
             })}
           </Text>
-          <Button onClick={handleClose}>{t('import.close')}</Button>
+          <Button onClick={handleClose} color="accent" c="dark.9" fw={700} mt="sm">
+            {t('import.close')}
+          </Button>
         </Stack>
       )}
     </Modal>

@@ -32,12 +32,16 @@ export function DeleteConfirmModal({
       onClose={onClose}
       title={t('subscription.deleteTitle')}
       centered
+      styles={{
+        content: { background: 'light-dark(#ffffff, #18181b)' },
+        header: { background: 'light-dark(#ffffff, #18181b)' },
+      }}
     >
-      <Text mb="lg">
+      <Text mb="xl" c="dimmed" lh={1.6}>
         {t('subscription.deleteConfirm', { name: subscription?.name ?? '' })}
       </Text>
       <Group justify="flex-end">
-        <Button variant="default" onClick={onClose}>
+        <Button variant="subtle" color="gray" onClick={onClose}>
           {t('subscription.cancel')}
         </Button>
         <Button

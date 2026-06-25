@@ -1,4 +1,15 @@
-import { Alert, Button, Container, Paper, PasswordInput, Stack, TextInput, Title } from '@mantine/core';
+import {
+  Alert,
+  Box,
+  Button,
+  Container,
+  Paper,
+  PasswordInput,
+  Stack,
+  Text,
+  TextInput,
+  Title,
+} from '@mantine/core';
 import { useForm } from '@mantine/form';
 import { zod4Resolver } from 'mantine-form-zod-resolver';
 import { useState } from 'react';
@@ -44,14 +55,19 @@ export function LoginPage() {
 
   return (
     <AppShellLayout variant="auth">
-      <Container size={420} py="xl">
-        <Paper shadow="md" p="xl" radius="md" withBorder>
-          <Title order={2} mb="lg" ta="center">
-            {t('auth.loginTitle')}
-          </Title>
+      <Container size={420} py={{ base: 40, sm: 80 }}>
+        <Paper className="auth-card surface" p="xl" withBorder>
+          <Stack gap={4} mb="xl" ta="center">
+            <Title order={2} fw={700}>
+              {t('auth.loginTitle')}
+            </Title>
+            <Text size="sm" c="dimmed">
+              {t('app.name')}
+            </Text>
+          </Stack>
 
           {error && (
-            <Alert color="red" mb="md">
+            <Alert color="red" mb="md" variant="light" radius="md">
               {error}
             </Alert>
           )}
@@ -60,15 +76,19 @@ export function LoginPage() {
             <Stack gap="md">
               <TextInput
                 label={t('auth.username')}
+                placeholder={t('auth.username')}
                 {...form.getInputProps('username')}
               />
               <PasswordInput
                 label={t('auth.password')}
+                placeholder={t('auth.password')}
                 {...form.getInputProps('password')}
               />
-              <Button type="submit" fullWidth>
-                {t('auth.submitLogin')}
-              </Button>
+              <Box mt="xs">
+                <Button type="submit" fullWidth size="md" color="accent" c="dark.9" fw={700}>
+                  {t('auth.submitLogin')}
+                </Button>
+              </Box>
             </Stack>
           </form>
 

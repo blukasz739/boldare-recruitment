@@ -1,10 +1,12 @@
 import {
   Alert,
+  Box,
   Button,
   Container,
   Paper,
   PasswordInput,
   Stack,
+  Text,
   TextInput,
   Title,
 } from '@mantine/core';
@@ -53,14 +55,19 @@ export function RegisterPage() {
 
   return (
     <AppShellLayout variant="auth">
-      <Container size={420} py="xl">
-        <Paper shadow="md" p="xl" radius="md" withBorder>
-          <Title order={2} mb="lg" ta="center">
-            {t('auth.registerTitle')}
-          </Title>
+      <Container size={420} py={{ base: 40, sm: 80 }}>
+        <Paper className="auth-card surface" p="xl" withBorder>
+          <Stack gap={4} mb="xl" ta="center">
+            <Title order={2} fw={700}>
+              {t('auth.registerTitle')}
+            </Title>
+            <Text size="sm" c="dimmed">
+              {t('app.name')}
+            </Text>
+          </Stack>
 
           {error && (
-            <Alert color="red" mb="md">
+            <Alert color="red" mb="md" variant="light" radius="md">
               {error}
             </Alert>
           )}
@@ -69,19 +76,24 @@ export function RegisterPage() {
             <Stack gap="md">
               <TextInput
                 label={t('auth.username')}
+                placeholder={t('auth.username')}
                 {...form.getInputProps('username')}
               />
               <PasswordInput
                 label={t('auth.password')}
+                placeholder={t('auth.password')}
                 {...form.getInputProps('password')}
               />
               <PasswordInput
                 label={t('auth.confirmPassword')}
+                placeholder={t('auth.confirmPassword')}
                 {...form.getInputProps('confirmPassword')}
               />
-              <Button type="submit" fullWidth>
-                {t('auth.submitRegister')}
-              </Button>
+              <Box mt="xs">
+                <Button type="submit" fullWidth size="md" color="accent" c="dark.9" fw={700}>
+                  {t('auth.submitRegister')}
+                </Button>
+              </Box>
             </Stack>
           </form>
 

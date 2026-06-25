@@ -33,7 +33,14 @@
     "import": "Import wyciągu",
     "emptyTitle": "Brak subskrypcji",
     "emptyDescription": "Dodaj pierwszą subskrypcję ręcznie lub zaimportuj z wyciągu bankowego.",
-    "share": "{{percent}}% kosztów"
+    "share": "{{percent}}% kosztów",
+    "sortLabel": "Sortuj",
+    "sortCostDesc": "Największe",
+    "sortCostAsc": "Najmniejsze",
+    "sortNameAsc": "A → Z",
+    "filterCategories": "Kategorie",
+    "filterNoResults": "Brak pasujących subskrypcji",
+    "filterNoResultsHint": "Zaznacz co najmniej jedną kategorię, aby zobaczyć subskrypcje."
   },
   "subscription": {
     "addTitle": "Dodaj subskrypcję",

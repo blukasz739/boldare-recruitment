@@ -1,0 +1,178 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+[data-mantine-color-scheme='dark'] body {
+  background-color: #09090b;
+}
+
+[data-mantine-color-scheme='light'] body {
+  background-color: #fafafa;
+}
+
+/* ── Surface cards (light/dark aware) ── */
+
+.surface {
+  background: light-dark(#ffffff, #18181b);
+  border-color: light-dark(#e4e4e7, #27272a);
+}
+
+.surface-muted {
+  background: light-dark(#fafafa, #09090b);
+}
+
+.bento-tile {
+  position: relative;
+  overflow: hidden;
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+  cursor: default;
+}
+
+.bento-tile::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.12) 0%,
+    transparent 50%
+  );
+  pointer-events: none;
+}
+
+.bento-tile:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.25);
+}
+
+[data-mantine-color-scheme='light'] .bento-tile:hover {
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.12);
+}
+
+/* ── Landing hero grid pattern ── */
+
+.landing-hero {
+  position: relative;
+  overflow: hidden;
+  min-height: calc(100dvh - 64px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.landing-hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+  background-size: 48px 48px;
+  mask-image: radial-gradient(ellipse 70% 60% at 50% 40%, black 20%, transparent 80%);
+  pointer-events: none;
+}
+
+[data-mantine-color-scheme='light'] .landing-hero::before {
+  background-image:
+    linear-gradient(rgba(0, 0, 0, 0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0, 0, 0, 0.04) 1px, transparent 1px);
+}
+
+/* ── Auth card glow ── */
+
+.auth-card {
+  position: relative;
+}
+
+.auth-card::after {
+  content: '';
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+  background: linear-gradient(
+    135deg,
+    rgba(212, 255, 0, 0.3),
+    transparent 40%,
+    transparent 60%,
+    rgba(212, 255, 0, 0.1)
+  );
+  z-index: -1;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.auth-card:focus-within::after {
+  opacity: 1;
+}
+
+/* ── Dashboard bento grid ── */
+
+.bento-grid {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  grid-auto-rows: minmax(140px, auto);
+  gap: 12px;
+  align-items: stretch;
+}
+
+@media (max-width: 767px) {
+  .bento-grid {
+    grid-template-columns: 1fr;
+    grid-auto-rows: auto;
+  }
+}
+
+/* ── Stat card accent line ── */
+
+.stat-card-accent {
+  position: relative;
+  overflow: hidden;
+}
+
+.stat-card-accent::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: var(--mantine-color-accent-5);
+}
+
+/* ── Modal stepper override ── */
+
+.import-stepper .mantine-Stepper-stepIcon {
+  border-width: 2px;
+}
+
+/* ── Action buttons on colored tiles ── */
+
+.tile-action {
+  background: rgba(255, 255, 255, 0.15) !important;
+  color: #fff !important;
+  border: none !important;
+  backdrop-filter: blur(4px);
+  transition: background 0.15s ease;
+}
+
+.tile-action:hover {
+  background: rgba(255, 255, 255, 0.28) !important;
+}
+
+.tile-action--danger:hover {
+  background: rgba(239, 68, 68, 0.5) !important;
+}

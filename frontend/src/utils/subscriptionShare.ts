@@ -29,24 +29,28 @@ export function enrichSubscriptions(
   subscriptions: Subscription[],
   totalMonthly: number | string,
 ): SubscriptionWithShare[] {
-  return subscriptions
-    .map((subscription) => {
-      const monthlyEquivalent = getMonthlyEquivalent(
-        subscription.amount,
-        subscription.billing_cycle,
-      );
+  return subscriptions.map((subscription) => {
+    const monthlyEquivalent = getMonthlyEquivalent(
+      subscription.amount,
+      subscription.billing_cycle,
+    );
 
-      return {
-        ...subscription,
-        monthlyEquivalent,
-        share: getShare(monthlyEquivalent, totalMonthly),
-      };
-    })
-    .sort((a, b) => b.monthlyEquivalent - a.monthlyEquivalent);
+    return {
+      ...subscription,
+      monthlyEquivalent,
+      share: getShare(monthlyEquivalent, totalMonthly),
+    };
+  });
 }
 
 export function getDesktopGridSpan(share: number): number {
-  return Math.max(2, Math.min(12, Math.round(share * 12)));
+  return Math.max(2, Math.min(6, Math.round(share * 6)));
+}
+
+export function getDesktopGridRowSpan(share: number): number {
+  if (share >= 0.3) return 2;
+  if (share >= 0.15) return 2;
+  return 1;
 }
 
 export function getMobileTileHeight(share: number): number {

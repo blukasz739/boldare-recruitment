@@ -28,7 +28,7 @@ describe('subscriptionShare', () => {
     expect(getShare(0, 0)).toBe(0);
   });
 
-  it('sorts subscriptions by monthly equivalent descending', () => {
+  it('enriches subscriptions with monthly equivalent and share', () => {
     const subscriptions: Subscription[] = [
       { ...baseSubscription, id: 1, amount: 12, billing_cycle: 'yearly' },
       { ...baseSubscription, id: 2, amount: 60, billing_cycle: 'monthly' },
@@ -36,12 +36,13 @@ describe('subscriptionShare', () => {
 
     const enriched = enrichSubscriptions(subscriptions, 61);
 
-    expect(enriched[0]?.id).toBe(2);
-    expect(enriched[1]?.monthlyEquivalent).toBe(1);
+    expect(enriched).toHaveLength(2);
+    expect(enriched.find((s) => s.id === 2)?.monthlyEquivalent).toBe(60);
+    expect(enriched.find((s) => s.id === 1)?.monthlyEquivalent).toBe(1);
   });
 
   it('returns sensible grid span and mobile height', () => {
-    expect(getDesktopGridSpan(0.5)).toBe(6);
+    expect(getDesktopGridSpan(0.5)).toBe(3);
     expect(getDesktopGridSpan(0.01)).toBeGreaterThanOrEqual(2);
     expect(getMobileTileHeight(0.4)).toBeGreaterThanOrEqual(120);
   });

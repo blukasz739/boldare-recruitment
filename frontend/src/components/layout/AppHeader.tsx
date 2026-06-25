@@ -1,10 +1,11 @@
 import {
   Anchor,
   AppShell,
+  Box,
   Button,
+  Divider,
   Group,
   Text,
-  Title,
 } from '@mantine/core';
 import { Link, useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
@@ -29,29 +30,61 @@ export function AppHeader({ variant }: AppHeaderProps) {
   };
 
   return (
-    <AppShell.Header>
-      <Group h="100%" px="md" justify="space-between">
+    <AppShell.Header
+      style={{
+        borderBottom: '1px solid var(--mantine-color-default-border)',
+        backgroundColor: 'var(--mantine-color-body)',
+        backdropFilter: 'blur(12px)',
+      }}
+    >
+      <Group h="100%" px="lg" justify="space-between" wrap="nowrap">
         <Anchor component={Link} to="/" underline="never" c="inherit">
-          <Title order={3}>{t('app.name')}</Title>
+          <Group gap={8} wrap="nowrap">
+            <Box
+              w={28}
+              h={28}
+              style={{
+                borderRadius: 8,
+                background: 'var(--mantine-color-accent-5)',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+              }}
+            >
+              <Text fw={800} size="xs" c="dark.9">
+                S
+              </Text>
+            </Box>
+            <Text fw={700} size="lg" lh={1}>
+              {t('app.name')}
+            </Text>
+          </Group>
         </Anchor>
 
-        <Group gap="sm">
+        <Group gap="xs" wrap="nowrap">
           <LanguageSwitcher />
           <ThemeToggle />
 
           {variant === 'landing' && (
             <>
-              <Button component={Link} to="/login" variant="subtle">
+              <Divider orientation="vertical" visibleFrom="sm" />
+              <Button
+                component={Link}
+                to="/login"
+                variant="subtle"
+                color="gray"
+                visibleFrom="sm"
+              >
                 {t('nav.login')}
               </Button>
-              <Button component={Link} to="/register">
+              <Button component={Link} to="/register" color="accent" c="dark.9">
                 {t('nav.register')}
               </Button>
             </>
           )}
 
           {variant === 'dashboard' && (
-            <Button variant="subtle" onClick={handleLogout}>
+            <Button variant="subtle" color="gray" onClick={handleLogout}>
               {t('nav.logout')}
             </Button>
           )}
@@ -64,12 +97,22 @@ export function AppHeader({ variant }: AppHeaderProps) {
 export function AppShellLayout({
   variant,
   children,
+  fullWidth = false,
 }: {
   variant: HeaderVariant;
   children: React.ReactNode;
+  fullWidth?: boolean;
 }) {
   return (
-    <AppShell header={{ height: 60 }} padding="md">
+    <AppShell
+      header={{ height: 64 }}
+      padding={fullWidth ? 0 : 'lg'}
+      styles={{
+        main: {
+          backgroundColor: 'var(--mantine-color-body)',
+        },
+      }}
+    >
       <AppHeader variant={variant} />
       <AppShell.Main>{children}</AppShell.Main>
     </AppShell>
@@ -88,9 +131,9 @@ export function AuthFooterLink({
   const { t } = useTranslation();
 
   return (
-    <Text ta="center" size="sm" mt="md">
+    <Text ta="center" size="sm" c="dimmed" mt="xl">
       {t(messageKey)}{' '}
-      <Anchor component={Link} to={to}>
+      <Anchor component={Link} to={to} fw={600} c="accent.5">
         {t(linkKey)}
       </Anchor>
     </Text>

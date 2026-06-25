@@ -78,7 +78,16 @@ export function SubscriptionFormModal({
   }));
 
   return (
-    <Modal opened={opened} onClose={onClose} title={title} centered>
+    <Modal
+      opened={opened}
+      onClose={onClose}
+      title={title}
+      centered
+      styles={{
+        content: { background: 'light-dark(#ffffff, #18181b)' },
+        header: { background: 'light-dark(#ffffff, #18181b)' },
+      }}
+    >
       <form onSubmit={handleSubmit}>
         <Stack gap="md">
           <TextInput
@@ -90,11 +99,13 @@ export function SubscriptionFormModal({
             decimalScale={2}
             fixedDecimalScale
             min={0}
+            prefix="$"
             {...form.getInputProps('amount')}
           />
           <SegmentedControl
             fullWidth
             data={billingData}
+            color="accent"
             {...form.getInputProps('billing_cycle')}
           />
           <Select
@@ -102,11 +113,11 @@ export function SubscriptionFormModal({
             data={categoryData}
             {...form.getInputProps('category')}
           />
-          <Group justify="flex-end">
-            <Button variant="default" onClick={onClose}>
+          <Group justify="flex-end" mt="sm">
+            <Button variant="subtle" color="gray" onClick={onClose}>
               {t('subscription.cancel')}
             </Button>
-            <Button type="submit" loading={loading}>
+            <Button type="submit" loading={loading} color="accent" c="dark.9" fw={700}>
               {submitLabel}
             </Button>
           </Group>

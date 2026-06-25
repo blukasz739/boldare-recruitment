@@ -1,5 +1,6 @@
 import '@mantine/core/styles.css';
 import '@mantine/dropzone/styles.css';
+import './styles/global.css';
 
 import { ColorSchemeScript, MantineProvider } from '@mantine/core';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';

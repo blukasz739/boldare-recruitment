@@ -33,7 +33,14 @@
     "import": "Import statement",
     "emptyTitle": "No subscriptions yet",
     "emptyDescription": "Add your first subscription manually or import from a bank statement.",
-    "share": "{{percent}}% of costs"
+    "share": "{{percent}}% of costs",
+    "sortLabel": "Sort",
+    "sortCostDesc": "Largest",
+    "sortCostAsc": "Smallest",
+    "sortNameAsc": "A → Z",
+    "filterCategories": "Categories",
+    "filterNoResults": "No matching subscriptions",
+    "filterNoResultsHint": "Select at least one category to see subscriptions."
   },
   "subscription": {
     "addTitle": "Add subscription",
