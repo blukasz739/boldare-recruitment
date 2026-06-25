@@ -12,7 +12,7 @@ final class RegisterRequest
         public readonly string $username = '',
 
         #[Assert\NotBlank(message: 'Password is required.')]
-        #[Assert\Length(min: 6, max: 128, minMessage: 'Password must be at least {{ limit }} characters.')]
+        #[Assert\Length(min: 8, max: 128, minMessage: 'Password must be at least {{ limit }} characters.')]
         public readonly string $password = '',
     ) {
     }
