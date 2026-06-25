@@ -1,0 +1,93 @@
+{
+  "app": {
+    "name": "SubTrack"
+  },
+  "nav": {
+    "login": "Log in",
+    "register": "Sign up",
+    "logout": "Log out"
+  },
+  "landing": {
+    "title": "All your subscriptions in one place",
+    "subtitle": "Know exactly how much you pay each month",
+    "ctaPrimary": "Get started free",
+    "ctaSecondary": "Log in"
+  },
+  "auth": {
+    "loginTitle": "Log in",
+    "registerTitle": "Create account",
+    "username": "Username",
+    "password": "Password",
+    "confirmPassword": "Confirm password",
+    "submitLogin": "Log in",
+    "submitRegister": "Sign up",
+    "noAccount": "Don't have an account?",
+    "hasAccount": "Already have an account?",
+    "invalidCredentials": "Invalid username or password."
+  },
+  "dashboard": {
+    "title": "Your subscriptions",
+    "perMonth": "/ month",
+    "active": "{{count}} active",
+    "add": "Add",
+    "import": "Import statement",
+    "emptyTitle": "No subscriptions yet",
+    "emptyDescription": "Add your first subscription manually or import from a bank statement.",
+    "share": "{{percent}}% of costs"
+  },
+  "subscription": {
+    "addTitle": "Add subscription",
+    "editTitle": "Edit subscription",
+    "deleteTitle": "Delete subscription",
+    "deleteConfirm": "Are you sure you want to delete {{name}}?",
+    "name": "Service name",
+    "amount": "Amount",
+    "billingCycle": "Billing cycle",
+    "category": "Category",
+    "cancel": "Cancel",
+    "save": "Save",
+    "add": "Add",
+    "delete": "Delete",
+    "billingMonthly": "Monthly",
+    "billingYearly": "Yearly",
+    "perMonth": "/ month",
+    "perYear": "/ year"
+  },
+  "categories": {
+    "entertainment": "Entertainment",
+    "music": "Music & audio",
+    "work_tools": "Work & tools",
+    "other": "Other"
+  },
+  "import": {
+    "title": "Import bank statement",
+    "stepUpload": "Upload",
+    "stepAnalyze": "Analyze",
+    "stepReview": "Review",
+    "stepDone": "Done",
+    "apiKey": "API key",
+    "apiKeyInfo": "Your API key is used only for this analysis and is never stored.",
+    "dropzoneTitle": "Drag a CSV file here or click to select",
+    "dropzoneHint": "Accepts .csv files only",
+    "analyze": "Analyze",
+    "analyzing": "Analyzing statement…",
+    "confirmSelected": "Confirm selected ({{count}})",
+    "successTitle": "Import complete",
+    "successMessage": "{{count}} subscription(s) added successfully.",
+    "close": "Close",
+    "noProposals": "No subscription proposals found in the statement."
+  },
+  "validation": {
+    "required": "This field is required",
+    "usernameMin": "Username must be at least 3 characters",
+    "passwordMin": "Password must be at least 6 characters",
+    "passwordMatch": "Passwords must match",
+    "nameMin": "Name must be at least 2 characters",
+    "amountPositive": "Amount must be greater than zero",
+    "apiKeyRequired": "API key is required",
+    "fileRequired": "CSV file is required"
+  },
+  "errors": {
+    "generic": "Something went wrong. Please try again."
+  }
+}

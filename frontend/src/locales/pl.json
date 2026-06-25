@@ -1,0 +1,93 @@
+{
+  "app": {
+    "name": "SubTrack"
+  },
+  "nav": {
+    "login": "Zaloguj się",
+    "register": "Zarejestruj się",
+    "logout": "Wyloguj"
+  },
+  "landing": {
+    "title": "Wszystkie subskrypcje w jednym miejscu",
+    "subtitle": "Wiedz, ile płacisz miesięcznie",
+    "ctaPrimary": "Zacznij za darmo",
+    "ctaSecondary": "Zaloguj się"
+  },
+  "auth": {
+    "loginTitle": "Logowanie",
+    "registerTitle": "Rejestracja",
+    "username": "Nazwa użytkownika",
+    "password": "Hasło",
+    "confirmPassword": "Powtórz hasło",
+    "submitLogin": "Zaloguj się",
+    "submitRegister": "Zarejestruj się",
+    "noAccount": "Nie masz konta?",
+    "hasAccount": "Masz już konto?",
+    "invalidCredentials": "Nieprawidłowa nazwa użytkownika lub hasło."
+  },
+  "dashboard": {
+    "title": "Twoje subskrypcje",
+    "perMonth": "/ mies.",
+    "active": "{{count}} aktywnych",
+    "add": "Dodaj",
+    "import": "Import wyciągu",
+    "emptyTitle": "Brak subskrypcji",
+    "emptyDescription": "Dodaj pierwszą subskrypcję ręcznie lub zaimportuj z wyciągu bankowego.",
+    "share": "{{percent}}% kosztów"
+  },
+  "subscription": {
+    "addTitle": "Dodaj subskrypcję",
+    "editTitle": "Edytuj subskrypcję",
+    "deleteTitle": "Usuń subskrypcję",
+    "deleteConfirm": "Czy na pewno chcesz usunąć {{name}}?",
+    "name": "Nazwa usługi",
+    "amount": "Kwota",
+    "billingCycle": "Cykl rozliczenia",
+    "category": "Kategoria",
+    "cancel": "Anuluj",
+    "save": "Zapisz",
+    "add": "Dodaj",
+    "delete": "Usuń",
+    "billingMonthly": "Miesięcznie",
+    "billingYearly": "Rocznie",
+    "perMonth": "/ mies.",
+    "perYear": "/ rok"
+  },
+  "categories": {
+    "entertainment": "Rozrywka",
+    "music": "Muzyka i audio",
+    "work_tools": "Praca i narzędzia",
+    "other": "Inne"
+  },
+  "import": {
+    "title": "Import wyciągu bankowego",
+    "stepUpload": "Upload",
+    "stepAnalyze": "Analiza",
+    "stepReview": "Podgląd",
+    "stepDone": "Gotowe",
+    "apiKey": "Klucz API",
+    "apiKeyInfo": "Klucz API jest używany tylko do tej analizy i nigdy nie jest zapisywany.",
+    "dropzoneTitle": "Przeciągnij plik CSV lub kliknij, aby wybrać",
+    "dropzoneHint": "Akceptowane tylko pliki .csv",
+    "analyze": "Analizuj",
+    "analyzing": "Analizuję wyciąg…",
+    "confirmSelected": "Zatwierdź wybrane ({{count}})",
+    "successTitle": "Import zakończony",
+    "successMessage": "Dodano {{count}} subskrypcji.",
+    "close": "Zamknij",
+    "noProposals": "Nie znaleziono propozycji subskrypcji we wyciągu."
+  },
+  "validation": {
+    "required": "To pole jest wymagane",
+    "usernameMin": "Nazwa użytkownika musi mieć co najmniej 3 znaki",
+    "passwordMin": "Hasło musi mieć co najmniej 6 znaków",
+    "passwordMatch": "Hasła muszą być identyczne",
+    "nameMin": "Nazwa musi mieć co najmniej 2 znaki",
+    "amountPositive": "Kwota musi być większa od zera",
+    "apiKeyRequired": "Klucz API jest wymagany",
+    "fileRequired": "Plik CSV jest wymagany"
+  },
+  "errors": {
+    "generic": "Coś poszło nie tak. Spróbuj ponownie."
+  }
+}
