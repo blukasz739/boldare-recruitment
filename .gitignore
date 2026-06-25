@@ -31,6 +31,11 @@ backend/var/
 backend/.phpunit.cache/
 backend/.php-cs-fixer.cache
 backend/phpunit.xml
+backend/.env.dev
+backend/.env.test
+backend/.env.local.php
+backend/config/secrets/prod/prod.decrypt.private.php
+backend/public/bundles/
 
 # --- Frontend (Node / React) ---
 frontend/node_modules/
