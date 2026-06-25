@@ -1,0 +1,33 @@
+# --- Environment & secrets ---
+.env
+.env.local
+.env.*.local
+*.pem
+
+# --- OS ---
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# --- IDE ---
+.idea/
+.vscode/*
+!.vscode/extensions.json
+*.swp
+*.swo
+
+# --- Docker ---
+docker-compose.override.yml
+
+# --- Backend (Symfony / PHP) ---
+backend/vendor/
+backend/var/
+backend/.phpunit.cache/
+backend/.php-cs-fixer.cache
+backend/phpunit.xml
+
+# --- Frontend (Node / React) ---
+frontend/node_modules/
+frontend/dist/
+frontend/.env
+frontend/coverage/
