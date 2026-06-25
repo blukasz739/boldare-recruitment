@@ -16,5 +16,19 @@ services:
       timeout: 5s
       retries: 5
 
+  backend:
+    build: ./backend
+    container_name: qvp_backend
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./backend:/app
+    environment:
+      DATABASE_URL: postgresql://app:app@db:5432/subscriptions?serverVersion=16&charset=utf8
+      APP_ENV: dev
+    depends_on:
+      db:
+        condition: service_healthy
+
 volumes:
   postgres_data:
