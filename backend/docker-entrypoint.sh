@@ -3,6 +3,11 @@ set -e
 
 cd /app
 
+if [ ! -f .env ] && [ -f .env.example ]; then
+  echo "Creating .env from .env.example..."
+  cp .env.example .env
+fi
+
 echo "Installing PHP dependencies..."
 composer install --no-interaction --no-blocking
 
