@@ -17,7 +17,7 @@ import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { ApiError } from '../api/client';
 import { AppShellLayout, AuthFooterLink } from '../components/layout/AppHeader';
-import { useAuth } from '../hooks/useAuth';
+import { useAuth } from '../hooks/authContext';
 import { createLoginSchema } from '../schemas/auth';
 
 export function LoginPage() {

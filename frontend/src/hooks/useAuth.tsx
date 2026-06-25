@@ -1,25 +1,16 @@
 import {
-  createContext,
   useCallback,
-  useContext,
+  useEffect,
   useMemo,
   useState,
   type ReactNode,
 } from 'react';
 import { useQueryClient } from '@tanstack/react-query';
 import * as authApi from '../api/auth';
+import { UNAUTHORIZED_EVENT } from '../api/client';
 import type { LoginInput, User } from '../types/auth';
 import { TOKEN_STORAGE_KEY, USER_STORAGE_KEY } from '../types/auth';
-
-interface AuthContextValue {
-  user: User | null;
-  isAuthenticated: boolean;
-  login: (input: LoginInput) => Promise<void>;
-  register: (input: LoginInput) => Promise<void>;
-  logout: () => void;
-}
-
-const AuthContext = createContext<AuthContextValue | null>(null);
+import { AuthContext } from './authContext';
 
 function readStoredUser(): User | null {
   const raw = localStorage.getItem(USER_STORAGE_KEY);
@@ -29,7 +20,18 @@ function readStoredUser(): User | null {
   }
 
   try {
-    return JSON.parse(raw) as User;
+    const parsed: unknown = JSON.parse(raw);
+
+    if (
+      typeof parsed === 'object' &&
+      parsed !== null &&
+      typeof (parsed as User).id === 'number' &&
+      typeof (parsed as User).username === 'string'
+    ) {
+      return parsed as User;
+    }
+
+    return null;
   } catch {
     return null;
   }
@@ -46,6 +48,19 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     const token = localStorage.getItem(TOKEN_STORAGE_KEY);
     return token ? readStoredUser() : null;
   });
+
+  useEffect(() => {
+    function handleUnauthorized() {
+      setUser(null);
+      queryClient.clear();
+    }
+
+    window.addEventListener(UNAUTHORIZED_EVENT, handleUnauthorized);
+
+    return () => {
+      window.removeEventListener(UNAUTHORIZED_EVENT, handleUnauthorized);
+    };
+  }, [queryClient]);
 
   const login = useCallback(async (input: LoginInput) => {
     const response = await authApi.login(input);
@@ -78,18 +93,4 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   );
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
-}
-
-export function useAuth(): AuthContextValue {
-  const context = useContext(AuthContext);
-
-  if (!context) {
-    throw new Error('useAuth must be used within AuthProvider');
-  }
-
-  return context;
-}
-
-export function getAuthToken(): string | null {
-  return localStorage.getItem(TOKEN_STORAGE_KEY);
 }
