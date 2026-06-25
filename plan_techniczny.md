@@ -73,7 +73,7 @@ Odpowiedzi API w formacie **JSON**.
 Oba projekty w **jednym repozytorium Git**. Bez narzędzi typu Nx/Turborepo — prosta struktura folderów.
 
 ```
-qvp_task/
+subtrack/
 ├── docker-compose.yml
 ├── README.md
 ├── plan.md
