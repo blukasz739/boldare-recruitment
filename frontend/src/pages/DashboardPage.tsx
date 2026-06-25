@@ -6,6 +6,7 @@ import { AppShellLayout } from '../components/layout/AppHeader';
 import { AddSubscriptionModal } from '../components/modals/AddSubscriptionModal';
 import { DeleteConfirmModal } from '../components/modals/DeleteConfirmModal';
 import { EditSubscriptionModal } from '../components/modals/EditSubscriptionModal';
+import { ImportModal } from '../components/modals/ImportModal';
 import { EmptyState } from '../components/subscriptions/EmptyState';
 import { MonthlyTotal } from '../components/subscriptions/MonthlyTotal';
 import { SubscriptionGrid } from '../components/subscriptions/SubscriptionGrid';
@@ -22,6 +23,8 @@ export function DashboardPage() {
   const { data: summary } = useSubscriptionSummary();
 
   const [addOpened, { open: openAdd, close: closeAdd }] = useDisclosure(false);
+  const [importOpened, { open: openImport, close: closeImport }] =
+    useDisclosure(false);
   const [editOpened, { open: openEdit, close: closeEdit }] = useDisclosure(false);
   const [deleteOpened, { open: openDelete, close: closeDelete }] =
     useDisclosure(false);
@@ -52,7 +55,9 @@ export function DashboardPage() {
             <MonthlyTotal monthlyTotal={monthlyTotal} count={count} />
             <Group>
               <Button onClick={openAdd}>{t('dashboard.add')}</Button>
-              <Button variant="light">{t('dashboard.import')}</Button>
+              <Button variant="light" onClick={openImport}>
+                {t('dashboard.import')}
+              </Button>
             </Group>
           </Stack>
 
@@ -61,7 +66,7 @@ export function DashboardPage() {
               <Loader />
             </Group>
           ) : items.length === 0 ? (
-            <EmptyState onAdd={openAdd} onImport={() => {}} />
+            <EmptyState onAdd={openAdd} onImport={openImport} />
           ) : (
             <SubscriptionGrid
               subscriptions={items}
@@ -84,6 +89,7 @@ export function DashboardPage() {
         onClose={closeDelete}
         subscription={selectedSubscription}
       />
+      <ImportModal opened={importOpened} onClose={closeImport} />
     </AppShellLayout>
   );
 }
