@@ -91,6 +91,7 @@
     "passwordMatch": "Hasła muszą być identyczne",
     "nameMin": "Nazwa musi mieć co najmniej 2 znaki",
     "amountPositive": "Kwota musi być większa od zera",
+    "amountTooLarge": "Kwota jest zbyt duża.",
     "apiKeyRequired": "Klucz API jest wymagany",
     "fileRequired": "Plik CSV jest wymagany"
   },

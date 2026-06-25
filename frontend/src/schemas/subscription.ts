@@ -1,6 +1,10 @@
 import type { TFunction } from 'i18next';
 import { z } from 'zod';
-import { BILLING_CYCLES, CATEGORIES } from '../types/subscription';
+import {
+  BILLING_CYCLES,
+  CATEGORIES,
+  MAX_SUBSCRIPTION_AMOUNT,
+} from '../types/subscription';
 
 export function createSubscriptionSchema(t: TFunction) {
   return z.object({
@@ -10,7 +14,8 @@ export function createSubscriptionSchema(t: TFunction) {
       .min(2, t('validation.nameMin')),
     amount: z
       .number({ error: t('validation.required') })
-      .positive(t('validation.amountPositive')),
+      .positive(t('validation.amountPositive'))
+      .max(MAX_SUBSCRIPTION_AMOUNT, t('validation.amountTooLarge')),
     billing_cycle: z.enum(BILLING_CYCLES, {
       error: t('validation.required'),
     }),

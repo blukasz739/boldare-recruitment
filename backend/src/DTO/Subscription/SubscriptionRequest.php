@@ -15,6 +15,7 @@ final class SubscriptionRequest
 
         #[Assert\NotBlank(message: 'Amount is required.')]
         #[Assert\Positive(message: 'Amount must be greater than zero.')]
+        #[Assert\LessThanOrEqual(value: 99999999.99, message: 'Amount is too large.')]
         public readonly float $amount = 0.0,
 
         #[Assert\NotNull(message: 'Billing cycle is required.')]

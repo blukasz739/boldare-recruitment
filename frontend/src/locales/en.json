@@ -91,6 +91,7 @@
     "passwordMatch": "Passwords must match",
     "nameMin": "Name must be at least 2 characters",
     "amountPositive": "Amount must be greater than zero",
+    "amountTooLarge": "Amount is too large.",
     "apiKeyRequired": "API key is required",
     "fileRequired": "CSV file is required"
   },

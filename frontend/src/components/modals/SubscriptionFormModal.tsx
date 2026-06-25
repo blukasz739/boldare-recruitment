@@ -99,7 +99,7 @@ export function SubscriptionFormModal({
             label={t('subscription.amount')}
             decimalScale={2}
             fixedDecimalScale
-            min={0}
+            clampBehavior="none"
             prefix="$"
             {...form.getInputProps('amount')}
           />

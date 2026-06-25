@@ -36,6 +36,8 @@ export interface ImportConfirmResponse {
   count: number;
 }
 
+export const MAX_SUBSCRIPTION_AMOUNT = 99_999_999.99;
+
 export const BILLING_CYCLES: BillingCycle[] = ['monthly', 'yearly'];
 
 export const CATEGORIES: Category[] = [
