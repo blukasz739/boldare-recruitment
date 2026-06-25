@@ -205,7 +205,7 @@ Na zadanie rekrutacyjne wystarczy Docker Compose bez nginx, o ile README jasno o
 
 - Rejestracja: `username` + `hasło` (bez emaila, bez potwierdzenia).
 - Logowanie: `username` + `hasło`.
-- Sesja trwa do wylogowania.
+- Sesja trwa do wylogowania (token JWT trzymany po stronie klienta).
 - Izolacja danych — użytkownik widzi tylko swoje subskrypcje.
 
 ### JWT — co to jest
@@ -227,8 +227,7 @@ Na zadanie rekrutacyjne wystarczy Docker Compose bez nginx, o ile README jasno o
 
 4. Backend weryfikuje podpis JWT → user_id → zwraca dane użytkownika
 
-5. POST /api/logout
-   → frontend usuwa token (JWT jest stateless — serwer nie trzyma sesji)
+5. Wylogowanie: frontend usuwa token z pamięci (brak endpointu backendowego — JWT stateless)
 ```
 
 ### Dlaczego JWT, a nie sesja cookie
@@ -317,7 +316,6 @@ Wszystkie ścieżki pod prefiksem `/api`. Chronione endpointy wymagają nagłów
 |--------|----------|------|-----------|
 | `POST` | `/api/register` | `{ username, password }` | `201` + token lub `204` |
 | `POST` | `/api/login` | `{ username, password }` | `200` + `{ token }` |
-| `POST` | `/api/logout` | — | `204` (opcjonalny — głównie po stronie klienta) |
 
 ### Subskrypcje
 

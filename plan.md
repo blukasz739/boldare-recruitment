@@ -81,8 +81,8 @@ Przy imporcie AI może **zaproponować kategorię** na podstawie nazwy usługi; 
 
 - **Rejestracja:** username + hasło — konto aktywne od razu po rejestracji.
 - **Logowanie:** username + hasło.
-- **Sesja:** użytkownik pozostaje zalogowany do momentu wylogowania.
-- **Wylogowanie:** dostępne z poziomu aplikacji.
+- **Sesja:** użytkownik pozostaje zalogowany, dopóki frontend trzyma token JWT.
+- **Wylogowanie:** po stronie aplikacji (frontend) — usunięcie tokenu; bez wywołania API.
 
 **Świadomie pominięte:** email, potwierdzenie rejestracji (link aktywacyjny, kod weryfikacyjny), OAuth (logowanie przez Google, Facebook itd.). Na zadanie rekrutacyjne wystarczy proste konto w aplikacji — użytkownik podaje nazwę użytkownika, hasło i od razu może korzystać z panelu.
 
