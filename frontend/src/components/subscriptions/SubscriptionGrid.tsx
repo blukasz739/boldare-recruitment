@@ -1,3 +1,5 @@
+import { SimpleGrid } from '@mantine/core';
+import { useMediaQuery } from '@mantine/hooks';
 import type { Subscription } from '../../types/subscription';
 import { enrichSubscriptions } from '../../utils/subscriptionShare';
 import { SubscriptionTile } from './SubscriptionTile';
@@ -16,7 +18,23 @@ export function SubscriptionGrid({
   onEdit,
   onDelete,
 }: SubscriptionGridProps) {
+  const isMobile = useMediaQuery('(max-width: 767px)');
   const enriched = enrichSubscriptions(subscriptions, totalMonthly);
+
+  if (isMobile) {
+    return (
+      <SimpleGrid cols={1} spacing="md">
+        {enriched.map((subscription) => (
+          <SubscriptionTile
+            key={subscription.id}
+            subscription={subscription}
+            onEdit={onEdit}
+            onDelete={onDelete}
+          />
+        ))}
+      </SimpleGrid>
+    );
+  }
 
   return (
     <div

@@ -1,9 +1,11 @@
 import { ActionIcon, Group, Paper, Stack, Text, Title } from '@mantine/core';
+import { useMediaQuery } from '@mantine/hooks';
 import { IconPencil, IconTrash } from '@tabler/icons-react';
 import { useTranslation } from 'react-i18next';
 import { formatCurrency } from '../../utils/formatCurrency';
 import {
   getDesktopGridSpan,
+  getMobileTileHeight,
   type SubscriptionWithShare,
 } from '../../utils/subscriptionShare';
 import { CategoryBadge } from './CategoryBadge';
@@ -20,6 +22,7 @@ export function SubscriptionTile({
   onDelete,
 }: SubscriptionTileProps) {
   const { t } = useTranslation();
+  const isMobile = useMediaQuery('(max-width: 767px)');
 
   const billingLabel =
     subscription.billing_cycle === 'monthly'
@@ -34,8 +37,10 @@ export function SubscriptionTile({
       p="md"
       radius="md"
       style={{
-        gridColumn: `span ${getDesktopGridSpan(subscription.share)}`,
-        minHeight: 140,
+        gridColumn: isMobile ? '1 / -1' : `span ${getDesktopGridSpan(subscription.share)}`,
+        minHeight: isMobile
+          ? getMobileTileHeight(subscription.share)
+          : 140,
         display: 'flex',
         flexDirection: 'column',
         justifyContent: 'space-between',

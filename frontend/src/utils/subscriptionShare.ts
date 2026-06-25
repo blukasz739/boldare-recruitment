@@ -43,3 +43,7 @@ export function enrichSubscriptions(
 export function getDesktopGridSpan(share: number): number {
   return Math.max(2, Math.min(12, Math.round(share * 12)));
 }
+
+export function getMobileTileHeight(share: number): number {
+  return Math.max(120, Math.round(share * 500));
+}
