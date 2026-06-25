@@ -1,6 +1,11 @@
 import { Button, Container, Group, Loader, Stack, Title } from '@mantine/core';
+import { useDisclosure } from '@mantine/hooks';
+import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { AppShellLayout } from '../components/layout/AppHeader';
+import { AddSubscriptionModal } from '../components/modals/AddSubscriptionModal';
+import { DeleteConfirmModal } from '../components/modals/DeleteConfirmModal';
+import { EditSubscriptionModal } from '../components/modals/EditSubscriptionModal';
 import { EmptyState } from '../components/subscriptions/EmptyState';
 import { MonthlyTotal } from '../components/subscriptions/MonthlyTotal';
 import { SubscriptionGrid } from '../components/subscriptions/SubscriptionGrid';
@@ -8,6 +13,7 @@ import {
   useSubscriptionSummary,
   useSubscriptions,
 } from '../hooks/useSubscriptions';
+import type { Subscription } from '../types/subscription';
 import type { SubscriptionWithShare } from '../utils/subscriptionShare';
 
 export function DashboardPage() {
@@ -15,12 +21,27 @@ export function DashboardPage() {
   const { data: subscriptions, isLoading } = useSubscriptions();
   const { data: summary } = useSubscriptionSummary();
 
+  const [addOpened, { open: openAdd, close: closeAdd }] = useDisclosure(false);
+  const [editOpened, { open: openEdit, close: closeEdit }] = useDisclosure(false);
+  const [deleteOpened, { open: openDelete, close: closeDelete }] =
+    useDisclosure(false);
+
+  const [selectedSubscription, setSelectedSubscription] =
+    useState<Subscription | null>(null);
+
   const monthlyTotal = summary?.monthly_total ?? 0;
   const count = summary?.count ?? 0;
   const items = subscriptions ?? [];
 
-  const handleEdit = (_subscription: SubscriptionWithShare) => {};
-  const handleDelete = (_subscription: SubscriptionWithShare) => {};
+  const handleEdit = (subscription: SubscriptionWithShare) => {
+    setSelectedSubscription(subscription);
+    openEdit();
+  };
+
+  const handleDelete = (subscription: SubscriptionWithShare) => {
+    setSelectedSubscription(subscription);
+    openDelete();
+  };
 
   return (
     <AppShellLayout variant="dashboard">
@@ -30,7 +51,7 @@ export function DashboardPage() {
             <Title order={1}>{t('dashboard.title')}</Title>
             <MonthlyTotal monthlyTotal={monthlyTotal} count={count} />
             <Group>
-              <Button>{t('dashboard.add')}</Button>
+              <Button onClick={openAdd}>{t('dashboard.add')}</Button>
               <Button variant="light">{t('dashboard.import')}</Button>
             </Group>
           </Stack>
@@ -40,7 +61,7 @@ export function DashboardPage() {
               <Loader />
             </Group>
           ) : items.length === 0 ? (
-            <EmptyState onAdd={() => {}} onImport={() => {}} />
+            <EmptyState onAdd={openAdd} onImport={() => {}} />
           ) : (
             <SubscriptionGrid
               subscriptions={items}
@@ -51,6 +72,18 @@ export function DashboardPage() {
           )}
         </Stack>
       </Container>
+
+      <AddSubscriptionModal opened={addOpened} onClose={closeAdd} />
+      <EditSubscriptionModal
+        opened={editOpened}
+        onClose={closeEdit}
+        subscription={selectedSubscription}
+      />
+      <DeleteConfirmModal
+        opened={deleteOpened}
+        onClose={closeDelete}
+        subscription={selectedSubscription}
+      />
     </AppShellLayout>
   );
 }
