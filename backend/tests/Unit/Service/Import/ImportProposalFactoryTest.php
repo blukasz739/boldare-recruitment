@@ -28,4 +28,21 @@ final class ImportProposalFactoryTest extends TestCase
 
         $this->assertSame([], $proposals);
     }
+
+    public function testFromConfirmItemParsesArrayPayload(): void
+    {
+        $factory = new ImportProposalFactory();
+
+        $proposal = $factory->fromConfirmItem([
+            'name' => 'Spotify',
+            'amount' => '9.99',
+            'billing_cycle' => 'monthly',
+            'category' => 'music',
+            'selected' => true,
+        ]);
+
+        $this->assertSame('Spotify', $proposal->name);
+        $this->assertSame(9.99, $proposal->amount);
+        $this->assertTrue($proposal->selected);
+    }
 }

@@ -28,16 +28,40 @@ final class ImportProposalFactory
                 continue;
             }
 
-            $proposals[] = new ImportProposalData(
-                name: (string) ($item['name'] ?? ''),
-                amount: (float) ($item['amount'] ?? 0),
-                billing_cycle: $this->parseBillingCycle($item['billing_cycle'] ?? null),
-                category: $this->parseCategory($item['category'] ?? null),
-                selected: true,
-            );
+            $proposals[] = $this->fromArray($item, selected: true);
         }
 
         return $proposals;
+    }
+
+    public function fromConfirmItem(mixed $item): ImportProposalData
+    {
+        if ($item instanceof ImportProposalData) {
+            return $item;
+        }
+
+        if (!is_array($item)) {
+            throw new UnprocessableEntityHttpException('Invalid proposal format.');
+        }
+
+        return $this->fromArray(
+            $item,
+            selected: (bool) ($item['selected'] ?? true),
+        );
+    }
+
+    /**
+     * @param array<string, mixed> $item
+     */
+    private function fromArray(array $item, bool $selected): ImportProposalData
+    {
+        return new ImportProposalData(
+            name: (string) ($item['name'] ?? ''),
+            amount: (float) ($item['amount'] ?? 0),
+            billing_cycle: $this->parseBillingCycle($item['billing_cycle'] ?? null),
+            category: $this->parseCategory($item['category'] ?? null),
+            selected: $selected,
+        );
     }
 
     /**

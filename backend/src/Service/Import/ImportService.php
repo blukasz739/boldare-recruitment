@@ -13,6 +13,7 @@ final class ImportService
 {
     public function __construct(
         private readonly SubscriptionManager $subscriptionManager,
+        private readonly ImportProposalFactory $importProposalFactory,
     ) {
     }
 
@@ -24,6 +25,8 @@ final class ImportService
         $created = [];
 
         foreach ($request->proposals as $proposal) {
+            $proposal = $this->importProposalFactory->fromConfirmItem($proposal);
+
             if (!$proposal->selected) {
                 continue;
             }
