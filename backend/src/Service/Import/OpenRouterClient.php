@@ -5,7 +5,7 @@ namespace App\Service\Import;
 use Symfony\Component\HttpKernel\Exception\UnprocessableEntityHttpException;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
 
-final class OpenRouterClient
+final class OpenRouterClient implements SubscriptionDetectorClientInterface
 {
     public function __construct(
         private readonly HttpClientInterface $httpClient,

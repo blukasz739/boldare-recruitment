@@ -16,3 +16,5 @@ services:
         arguments:
             $openRouterApiUrl: '%openrouter.api_url%'
             $openRouterModel: '%openrouter.model%'
+
+    App\Service\Import\SubscriptionDetectorClientInterface: '@App\Service\Import\OpenRouterClient'

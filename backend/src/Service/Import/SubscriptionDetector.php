@@ -9,7 +9,7 @@ final class SubscriptionDetector
 {
     public function __construct(
         private readonly BankStatementParser $bankStatementParser,
-        private readonly OpenRouterClient $openRouterClient,
+        private readonly SubscriptionDetectorClientInterface $openRouterClient,
         private readonly ImportProposalFactory $importProposalFactory,
     ) {
     }
