@@ -1,4 +1,4 @@
-import { TOKEN_STORAGE_KEY } from '../types/auth';
+import { TOKEN_STORAGE_KEY, USER_STORAGE_KEY } from '../types/auth';
 
 const API_BASE = import.meta.env.VITE_API_URL ?? '';
 
@@ -10,6 +10,14 @@ export class ApiError extends Error {
     this.name = 'ApiError';
     this.status = status;
   }
+}
+
+export const UNAUTHORIZED_EVENT = 'auth:unauthorized';
+
+function handleUnauthorized(): void {
+  localStorage.removeItem(TOKEN_STORAGE_KEY);
+  localStorage.removeItem(USER_STORAGE_KEY);
+  window.dispatchEvent(new Event(UNAUTHORIZED_EVENT));
 }
 
 async function parseJsonBody<T>(response: Response): Promise<T> {
@@ -81,6 +89,10 @@ export async function apiClient<T>(
   }
 
   if (!response.ok) {
+    if (response.status === 401 && token) {
+      handleUnauthorized();
+    }
+
     const message = await parseErrorMessage(response);
     throw new ApiError(response.status, message);
   }
@@ -116,6 +128,10 @@ export async function apiClientFormData<T>(
   }
 
   if (!response.ok) {
+    if (response.status === 401 && token) {
+      handleUnauthorized();
+    }
+
     const message = await parseErrorMessage(response);
     throw new ApiError(response.status, message);
   }
