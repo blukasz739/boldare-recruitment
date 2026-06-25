@@ -45,4 +45,18 @@ final class ImportProposalFactoryTest extends TestCase
         $this->assertSame(9.99, $proposal->amount);
         $this->assertTrue($proposal->selected);
     }
+
+    public function testIsSelectedReturnsFalseForUncheckedArray(): void
+    {
+        $factory = new ImportProposalFactory();
+
+        self::assertFalse($factory->isSelected(['name' => 'X', 'selected' => false]));
+    }
+
+    public function testIsSelectedDefaultsToTrueWhenFlagMissing(): void
+    {
+        $factory = new ImportProposalFactory();
+
+        self::assertTrue($factory->isSelected(['name' => 'X']));
+    }
 }

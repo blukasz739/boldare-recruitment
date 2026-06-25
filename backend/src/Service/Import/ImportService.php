@@ -7,13 +7,18 @@ use App\DTO\Import\ImportProposalData;
 use App\DTO\Subscription\SubscriptionRequest;
 use App\Entity\Subscription;
 use App\Entity\User;
+use App\Serializer\SubscriptionSerializer;
 use App\Service\Subscription\SubscriptionManager;
+use Symfony\Component\HttpKernel\Exception\UnprocessableEntityHttpException;
+use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 final class ImportService
 {
     public function __construct(
         private readonly SubscriptionManager $subscriptionManager,
         private readonly ImportProposalFactory $importProposalFactory,
+        private readonly ValidatorInterface $validator,
+        private readonly SubscriptionSerializer $subscriptionSerializer,
     ) {
     }
 
@@ -24,22 +29,29 @@ final class ImportService
     {
         $created = [];
 
-        foreach ($request->proposals as $proposal) {
-            $proposal = $this->importProposalFactory->fromConfirmItem($proposal);
-
-            if (!$proposal->selected) {
+        foreach ($request->proposals as $rawProposal) {
+            if (!$this->importProposalFactory->isSelected($rawProposal)) {
                 continue;
             }
 
-            $created[] = $this->subscriptionManager->create(
-                $user,
-                new SubscriptionRequest(
-                    name: $proposal->name,
-                    amount: $proposal->amount,
-                    billing_cycle: $proposal->billing_cycle,
-                    category: $proposal->category,
-                ),
+            $proposal = $this->importProposalFactory->fromConfirmItem($rawProposal);
+
+            $subscriptionRequest = new SubscriptionRequest(
+                name: $proposal->name,
+                amount: $proposal->amount,
+                billing_cycle: $proposal->billing_cycle,
+                category: $proposal->category,
             );
+
+            $violations = $this->validator->validate($subscriptionRequest);
+
+            if (count($violations) > 0) {
+                throw new UnprocessableEntityHttpException(
+                    'Invalid subscription in import: ' . $violations->get(0)->getMessage(),
+                );
+            }
+
+            $created[] = $this->subscriptionManager->create($user, $subscriptionRequest);
         }
 
         return $created;
@@ -63,19 +75,12 @@ final class ImportService
     }
 
     /**
+     * @param list<Subscription> $subscriptions
+     *
      * @return list<array<string, int|string>>
      */
     public function serializeSubscriptions(array $subscriptions): array
     {
-        return array_map(
-            static fn (Subscription $subscription): array => [
-                'id' => $subscription->getId(),
-                'name' => $subscription->getName(),
-                'amount' => $subscription->getAmount(),
-                'billing_cycle' => $subscription->getBillingCycle()->value,
-                'category' => $subscription->getCategory()->value,
-            ],
-            $subscriptions,
-        );
+        return array_map($this->subscriptionSerializer->toArray(...), $subscriptions);
     }
 }

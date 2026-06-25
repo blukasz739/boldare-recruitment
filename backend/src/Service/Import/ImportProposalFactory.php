@@ -50,6 +50,19 @@ final class ImportProposalFactory
         );
     }
 
+    public function isSelected(mixed $item): bool
+    {
+        if ($item instanceof ImportProposalData) {
+            return $item->selected;
+        }
+
+        if (!is_array($item)) {
+            throw new UnprocessableEntityHttpException('Invalid proposal format.');
+        }
+
+        return (bool) ($item['selected'] ?? true);
+    }
+
     /**
      * @param array<string, mixed> $item
      */
