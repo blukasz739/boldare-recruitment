@@ -1,6 +1,6 @@
 import { Alert, Button, Container, Paper, PasswordInput, Stack, TextInput, Title } from '@mantine/core';
 import { useForm } from '@mantine/form';
-import { zodResolver } from 'mantine-form-zod-resolver';
+import { zod4Resolver } from 'mantine-form-zod-resolver';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
@@ -22,7 +22,7 @@ export function LoginPage() {
       username: '',
       password: '',
     },
-    validate: zodResolver(schema),
+    validate: zod4Resolver(schema),
   });
 
   const handleSubmit = form.onSubmit(async (values) => {

@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { formatCurrency } from '../../utils/formatCurrency';
 
 interface MonthlyTotalProps {
-  monthlyTotal: number;
+  monthlyTotal: number | string;
   count: number;
 }
 

@@ -9,7 +9,7 @@ import {
   TextInput,
 } from '@mantine/core';
 import { useForm } from '@mantine/form';
-import { zodResolver } from 'mantine-form-zod-resolver';
+import { zod4Resolver } from 'mantine-form-zod-resolver';
 import { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import {
@@ -49,7 +49,7 @@ export function SubscriptionFormModal({
 
   const form = useForm<SubscriptionFormValues>({
     initialValues: initialValues ?? defaultValues,
-    validate: zodResolver(schema),
+    validate: zod4Resolver(schema),
   });
 
   useEffect(() => {

@@ -2,6 +2,7 @@ import { useTranslation } from 'react-i18next';
 import { useSubscriptionMutations } from '../../hooks/useSubscriptions';
 import type { SubscriptionFormValues } from '../../schemas/subscription';
 import type { Subscription } from '../../types/subscription';
+import { toAmount } from '../../utils/formatCurrency';
 import { SubscriptionFormModal } from './SubscriptionFormModal';
 
 interface EditSubscriptionModalProps {
@@ -29,7 +30,7 @@ export function EditSubscriptionModal({
   const initialValues: SubscriptionFormValues | undefined = subscription
     ? {
         name: subscription.name,
-        amount: subscription.amount,
+        amount: toAmount(subscription.amount),
         billing_cycle: subscription.billing_cycle,
         category: subscription.category,
       }

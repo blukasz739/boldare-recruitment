@@ -7,7 +7,7 @@ import type { SubscriptionWithShare } from '../../utils/subscriptionShare';
 
 interface SubscriptionGridProps {
   subscriptions: Subscription[];
-  totalMonthly: number;
+  totalMonthly: number | string;
   onEdit: (subscription: SubscriptionWithShare) => void;
   onDelete: (subscription: SubscriptionWithShare) => void;
 }

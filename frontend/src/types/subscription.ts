@@ -5,14 +5,14 @@ export type Category = 'entertainment' | 'music' | 'work_tools' | 'other';
 export interface Subscription {
   id: number;
   name: string;
-  amount: number;
+  amount: number | string;
   billing_cycle: BillingCycle;
   category: Category;
   created_at: string;
 }
 
 export interface SubscriptionSummary {
-  monthly_total: number;
+  monthly_total: number | string;
   count: number;
 }
 

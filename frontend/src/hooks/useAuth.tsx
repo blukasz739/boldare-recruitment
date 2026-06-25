@@ -6,6 +6,7 @@ import {
   useState,
   type ReactNode,
 } from 'react';
+import { useQueryClient } from '@tanstack/react-query';
 import * as authApi from '../api/auth';
 import type { LoginInput, User } from '../types/auth';
 import { TOKEN_STORAGE_KEY, USER_STORAGE_KEY } from '../types/auth';
@@ -40,6 +41,7 @@ function persistSession(token: string, user: User): void {
 }
 
 export function AuthProvider({ children }: { children: ReactNode }) {
+  const queryClient = useQueryClient();
   const [user, setUser] = useState<User | null>(() => {
     const token = localStorage.getItem(TOKEN_STORAGE_KEY);
     return token ? readStoredUser() : null;
@@ -61,7 +63,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     localStorage.removeItem(TOKEN_STORAGE_KEY);
     localStorage.removeItem(USER_STORAGE_KEY);
     setUser(null);
-  }, []);
+    queryClient.clear();
+  }, [queryClient]);
 
   const value = useMemo(
     () => ({

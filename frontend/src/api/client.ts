@@ -12,16 +12,44 @@ export class ApiError extends Error {
   }
 }
 
+async function parseJsonBody<T>(response: Response): Promise<T> {
+  const text = await response.text();
+
+  if (!text) {
+    return undefined as T;
+  }
+
+  try {
+    return JSON.parse(text) as T;
+  } catch {
+    throw new ApiError(
+      response.status,
+      'Server returned an invalid response. Is the backend running?',
+    );
+  }
+}
+
 async function parseErrorMessage(response: Response): Promise<string> {
   try {
-    const data = (await response.json()) as {
+    const data = (await parseJsonBody<{
       message?: string;
       detail?: string;
       error?: string;
-    };
+      title?: string;
+    }>(response)) ?? {};
 
-    return data.message ?? data.detail ?? data.error ?? response.statusText;
-  } catch {
+    return (
+      data.message ??
+      data.detail ??
+      data.error ??
+      data.title ??
+      response.statusText
+    );
+  } catch (error) {
+    if (error instanceof ApiError) {
+      return error.message;
+    }
+
     return response.statusText || 'Request failed';
   }
 }
@@ -41,10 +69,16 @@ export async function apiClient<T>(
     headers.set('Authorization', `Bearer ${token}`);
   }
 
-  const response = await fetch(`${API_BASE}${path}`, {
-    ...options,
-    headers,
-  });
+  let response: Response;
+
+  try {
+    response = await fetch(`${API_BASE}${path}`, {
+      ...options,
+      headers,
+    });
+  } catch {
+    throw new ApiError(0, 'Cannot connect to server. Is the backend running?');
+  }
 
   if (!response.ok) {
     const message = await parseErrorMessage(response);
@@ -55,7 +89,7 @@ export async function apiClient<T>(
     return undefined as T;
   }
 
-  return response.json() as Promise<T>;
+  return parseJsonBody<T>(response);
 }
 
 export async function apiClientFormData<T>(
@@ -69,16 +103,22 @@ export async function apiClientFormData<T>(
     headers.set('Authorization', `Bearer ${token}`);
   }
 
-  const response = await fetch(`${API_BASE}${path}`, {
-    method: 'POST',
-    headers,
-    body: formData,
-  });
+  let response: Response;
+
+  try {
+    response = await fetch(`${API_BASE}${path}`, {
+      method: 'POST',
+      headers,
+      body: formData,
+    });
+  } catch {
+    throw new ApiError(0, 'Cannot connect to server. Is the backend running?');
+  }
 
   if (!response.ok) {
     const message = await parseErrorMessage(response);
     throw new ApiError(response.status, message);
   }
 
-  return response.json() as Promise<T>;
+  return parseJsonBody<T>(response);
 }

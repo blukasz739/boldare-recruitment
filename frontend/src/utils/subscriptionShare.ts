@@ -1,18 +1,23 @@
 import type { BillingCycle, Subscription } from '../types/subscription';
+import { toAmount } from './formatCurrency';
 
 export function getMonthlyEquivalent(
-  amount: number,
+  amount: number | string,
   billingCycle: BillingCycle,
 ): number {
-  return billingCycle === 'monthly' ? amount : amount / 12;
+  const numericAmount = toAmount(amount);
+
+  return billingCycle === 'monthly' ? numericAmount : numericAmount / 12;
 }
 
-export function getShare(monthlyEquivalent: number, totalMonthly: number): number {
-  if (totalMonthly <= 0) {
+export function getShare(monthlyEquivalent: number, totalMonthly: number | string): number {
+  const numericTotal = toAmount(totalMonthly);
+
+  if (numericTotal <= 0) {
     return 0;
   }
 
-  return monthlyEquivalent / totalMonthly;
+  return monthlyEquivalent / numericTotal;
 }
 
 export interface SubscriptionWithShare extends Subscription {
@@ -22,7 +27,7 @@ export interface SubscriptionWithShare extends Subscription {
 
 export function enrichSubscriptions(
   subscriptions: Subscription[],
-  totalMonthly: number,
+  totalMonthly: number | string,
 ): SubscriptionWithShare[] {
   return subscriptions
     .map((subscription) => {

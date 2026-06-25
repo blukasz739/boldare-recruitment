@@ -13,7 +13,7 @@ import {
 } from '@mantine/core';
 import { Dropzone, MIME_TYPES } from '@mantine/dropzone';
 import { useForm } from '@mantine/form';
-import { zodResolver } from 'mantine-form-zod-resolver';
+import { zod4Resolver } from 'mantine-form-zod-resolver';
 import { IconUpload } from '@tabler/icons-react';
 import { useMutation } from '@tanstack/react-query';
 import { useState } from 'react';
@@ -45,7 +45,7 @@ export function ImportModal({ opened, onClose }: ImportModalProps) {
       api_key: '',
       file: null as File | null,
     },
-    validate: zodResolver(uploadSchema),
+    validate: zod4Resolver(uploadSchema),
   });
 
   const analyzeMutation = useMutation({
