@@ -1,4 +1,6 @@
 parameters:
+    openrouter.api_url: '%env(OPENROUTER_API_URL)%'
+    openrouter.model: '%env(OPENROUTER_MODEL)%'
 
 services:
     _defaults:
@@ -9,3 +11,8 @@ services:
         resource: '../src/'
         exclude:
             - '../src/Kernel.php'
+
+    App\Service\Import\OpenRouterClient:
+        arguments:
+            $openRouterApiUrl: '%openrouter.api_url%'
+            $openRouterModel: '%openrouter.model%'
