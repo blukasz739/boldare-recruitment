@@ -1,6 +1,6 @@
 import { useTranslation } from 'react-i18next';
 import { useSubscriptionMutations } from '../../hooks/useSubscriptions';
-import type { SubscriptionFormValues } from '../../schemas/subscription';
+import type { SubscriptionFormInputValues, SubscriptionFormValues } from '../../schemas/subscription';
 import type { Subscription } from '../../types/subscription';
 import { toAmount } from '../../utils/formatCurrency';
 import { SubscriptionFormModal } from './SubscriptionFormModal';
@@ -27,7 +27,7 @@ export function EditSubscriptionModal({
     await updateMutation.mutateAsync({ id: subscription.id, input: values });
   };
 
-  const initialValues: SubscriptionFormValues | undefined = subscription
+  const initialValues: SubscriptionFormInputValues | undefined = subscription
     ? {
         name: subscription.name,
         amount: toAmount(subscription.amount),

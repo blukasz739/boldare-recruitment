@@ -9,11 +9,12 @@ import {
   TextInput,
 } from '@mantine/core';
 import { useForm } from '@mantine/form';
-import { zod4Resolver } from 'mantine-form-zod-resolver';
 import { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import {
   createSubscriptionSchema,
+  createSubscriptionValidators,
+  type SubscriptionFormInputValues,
   type SubscriptionFormValues,
 } from '../../schemas/subscription';
 import { BILLING_CYCLES, CATEGORIES } from '../../types/subscription';
@@ -23,14 +24,14 @@ interface SubscriptionFormModalProps {
   onClose: () => void;
   title: string;
   submitLabel: string;
-  initialValues?: SubscriptionFormValues;
+  initialValues?: SubscriptionFormInputValues;
   loading?: boolean;
   onSubmit: (values: SubscriptionFormValues) => Promise<void>;
 }
 
-const defaultValues: SubscriptionFormValues = {
+const defaultValues: SubscriptionFormInputValues = {
   name: '',
-  amount: 0,
+  amount: '',
   billing_cycle: 'monthly',
   category: 'entertainment',
 };
@@ -45,11 +46,12 @@ export function SubscriptionFormModal({
   onSubmit,
 }: SubscriptionFormModalProps) {
   const { t } = useTranslation();
-  const schema = createSubscriptionSchema(t);
 
-  const form = useForm<SubscriptionFormValues>({
+  const form = useForm<SubscriptionFormInputValues, SubscriptionFormValues>({
     initialValues: initialValues ?? defaultValues,
-    validate: zod4Resolver(schema),
+    validate: createSubscriptionValidators(t),
+    transformValues: (values) => createSubscriptionSchema(t).parse(values),
+    clearInputErrorOnChange: false,
   });
 
   useEffect(() => {
@@ -60,7 +62,7 @@ export function SubscriptionFormModal({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [opened, initialValues]);
 
-  const handleSubmit = form.onSubmit(async (values) => {
+  const handleSubmit = form.onSubmit(async (values: SubscriptionFormValues) => {
     await onSubmit(values);
     onClose();
   });
@@ -77,6 +79,8 @@ export function SubscriptionFormModal({
     label: t(`categories.${category}`),
     value: category,
   }));
+
+  const amountProps = form.getInputProps('amount');
 
   return (
     <Modal
@@ -101,7 +105,16 @@ export function SubscriptionFormModal({
             fixedDecimalScale
             clampBehavior="none"
             prefix="$"
-            {...form.getInputProps('amount')}
+            {...amountProps}
+            onKeyDown={(event) => {
+              if (event.key === 'Enter') {
+                event.preventDefault();
+                event.currentTarget.blur();
+                queueMicrotask(() => {
+                  handleSubmit();
+                });
+              }
+            }}
           />
           <SegmentedControl
             fullWidth
